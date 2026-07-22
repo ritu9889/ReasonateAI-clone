@@ -1,1 +1,295 @@
-ReasonateAI/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReasonateAI Clone - Standalone Design</title>
+    <style>
+        /* Complete Offline Reset — Needs NO Internet Connection */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #050507;
+            color: #f5f5f7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Ambient Purple Aurora Light Glow effect */
+        .glow-radial {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 900px;
+            height: 550px;
+            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.18) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Premium Floating Navigation Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 7, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 50;
+        }
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+        }
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #a855f7;
+            border-radius: 50%;
+        }
+        .logo span {
+            color: #737373;
+            font-weight: 300;
+        }
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+        nav a {
+            color: #a3a3a3;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        .demo-btn {
+            background-color: #f5f5f7;
+            color: #000000;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .demo-btn:hover {
+            background-color: #ffffff;
+        }
+
+        /* Hero Text Area Layout */
+        .hero {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 130px 24px 70px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(147, 51, 234, 0.12);
+            border: 1px solid rgba(147, 51, 234, 0.25);
+            color: #c084fc;
+            font-size: 11px;
+            border-radius: 30px;
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
+        .subtitle {
+            font-size: 17px;
+            color: #9ca3af;
+            max-width: 580px;
+            margin: 0 auto 38px auto;
+            line-height: 1.55;
+            font-weight: 300;
+        }
+        .cta-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background-color: #9333ea;
+            color: #ffffff;
+            padding: 11px 22px;
+            font-size: 13.5px;
+            font-weight: 500;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #a855f7;
+        }
+        .btn-secondary {
+            background-color: #111115;
+            border: 1px solid #222227;
+            color: #d1d5db;
+            padding: 11px 22px;
+            font-size: 13.5px;
+            font-weight: 500;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #1f1f29;
+        }
+
+        /* Code Canvas Analytics Visual Block */
+        .canvas-container {
+            max-width: 950px;
+            margin: 0 auto 100px auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+        .terminal-box {
+            background: rgba(13, 13, 17, 0.7);
+            border: 1px solid #222227;
+            border-radius: 10px;
+            padding: 24px;
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222227;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+        .dots {
+            display: flex;
+            gap: 6px;
+        }
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #2c2c35;
+        }
+        .terminal-title {
+            font-family: monospace;
+            font-size: 11px;
+            color: #4b5563;
+        }
+        .terminal-body {
+            font-family: monospace;
+            font-size: 12.5px;
+            color: #9ca3af;
+            line-height: 2.2;
+            text-align: left;
+        }
+        .text-purple { color: #d8b4fe; }
+        .text-green { color: #34d399; }
+        
+        .visual-display {
+            height: 180px;
+            margin-top: 24px;
+            border: 1px dashed #222227;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(147, 51, 234, 0.03), transparent);
+        }
+        .visual-display span {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #4b5563;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Purple Aura Glow Component -->
+    <div class="glow-radial"></div>
+
+    <!-- 1. NAVIGATION CONTROL -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-dot"></div>
+                Reasonate<span>AI</span>
+            </a>
+            <nav>
+                <a href="#">Platform</a>
+                <a href="#">Solutions</a>
+                <a href="#">Pricing</a>
+            </nav>
+            <button class="demo-btn">Book Demo</button>
+        </div>
+    </header>
+
+    <!-- 2. HERO HEADLINE COMPONENT -->
+    <section class="hero">
+        <div class="badge">✨ Twin Architecture is now live</div>
+        <h1>Reasoning at the<br>speed of AI.</h1>
+        <p class="subtitle">Automate your entire software lifecycle with an Autonomous Virtual CTO. Build, audit, and deploy cloud environments instantly.</p>
+        <div class="cta-group">
+            <button class="btn-primary">Deploy Instantly</button>
+            <button class="btn-secondary">Watch Demo</button>
+        </div>
+    </section>
+
+    <!-- 3. CODE LOGS TERMINAL BOX -->
+    <section class="canvas-container">
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="terminal-title">autonomous-cto-engine.js</div>
+                <div style="width: 30px;"></div>
+            </div>
+            <div class="terminal-body">
+                <p class="text-purple">&gt; initializing virtual-cto-twin-core...</p>
+                <p class="text-green">&gt; cloud architecture mapping complete (0.38s)</p>
+                <p>&gt; running structural integrity checks across 14 active server modules...</p>
+                <div class="visual-display">
+                    <span>Interactive Canvas Engine</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
