@@ -1,293 +1,163 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReasonateAI Clone - Standalone Design</title>
+    <title>ReasonateAI Clone - Responsive SaaS</title>
+    <!-- Tailwind CSS Engine -->
+    <script src="https://jsdelivr.net"></script>
     <style>
-        /* Complete Offline Reset — Needs NO Internet Connection */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #050507;
-            color: #f5f5f7;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        /* Base Reset & Variables for smooth look */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #030303; 
+            color: #f5f5f7; 
+            font-family: ui-sans-serif, system-ui, sans-serif;
             overflow-x: hidden;
-            min-height: 100vh;
         }
-
-        /* Ambient Purple Aurora Light Glow effect */
-        .glow-radial {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 900px;
-            height: 550px;
-            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.18) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
+        /* Dot Matrix Background Grid like original */
+        .bg-grid {
+            background-size: 32px 32px;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
         }
-
-        /* Premium Floating Navigation Header */
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(5, 5, 7, 0.75);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            z-index: 50;
+        /* Top Purple and Blue Neon Glow Effect */
+        .glow-main {
+            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.14) 0%, transparent 65%);
         }
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* Glassmorphism Bento Cards */
+        .bento-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .logo {
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: #ffffff;
-            letter-spacing: -0.3px;
-        }
-        .logo-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #a855f7;
-            border-radius: 50%;
-        }
-        .logo span {
-            color: #737373;
-            font-weight: 300;
-        }
-        nav {
-            display: flex;
-            gap: 28px;
-        }
-        nav a {
-            color: #a3a3a3;
-            font-size: 13px;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        nav a:hover {
-            color: #ffffff;
-        }
-        .demo-btn {
-            background-color: #f5f5f7;
-            color: #000000;
-            padding: 7px 14px;
-            font-size: 12px;
-            font-weight: 500;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .demo-btn:hover {
-            background-color: #ffffff;
-        }
-
-        /* Hero Text Area Layout */
-        .hero {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 130px 24px 70px 24px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            background: rgba(147, 51, 234, 0.12);
-            border: 1px solid rgba(147, 51, 234, 0.25);
-            color: #c084fc;
-            font-size: 11px;
-            border-radius: 30px;
-            margin-bottom: 28px;
-            font-weight: 500;
-        }
-        h1 {
-            font-size: 64px;
-            font-weight: 700;
-            line-height: 1.12;
-            letter-spacing: -1.5px;
-            margin-bottom: 24px;
-            color: #ffffff;
-        }
-        .subtitle {
-            font-size: 17px;
-            color: #9ca3af;
-            max-width: 580px;
-            margin: 0 auto 38px auto;
-            line-height: 1.55;
-            font-weight: 300;
-        }
-        .cta-group {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-        }
-        .btn-primary {
-            background-color: #9333ea;
-            color: #ffffff;
-            padding: 11px 22px;
-            font-size: 13.5px;
-            font-weight: 500;
-            border: none;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .btn-primary:hover {
-            background-color: #a855f7;
-        }
-        .btn-secondary {
-            background-color: #111115;
-            border: 1px solid #222227;
-            color: #d1d5db;
-            padding: 11px 22px;
-            font-size: 13.5px;
-            font-weight: 500;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .btn-secondary:hover {
-            background-color: #1f1f29;
-        }
-
-        /* Code Canvas Analytics Visual Block */
-        .canvas-container {
-            max-width: 950px;
-            margin: 0 auto 100px auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 10;
-        }
-        .terminal-box {
-            background: rgba(13, 13, 17, 0.7);
-            border: 1px solid #222227;
-            border-radius: 10px;
-            padding: 24px;
-        }
-        .terminal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #222227;
-            padding-bottom: 14px;
-            margin-bottom: 20px;
-        }
-        .dots {
-            display: flex;
-            gap: 6px;
-        }
-        .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: #2c2c35;
-        }
-        .terminal-title {
-            font-family: monospace;
-            font-size: 11px;
-            color: #4b5563;
-        }
-        .terminal-body {
-            font-family: monospace;
-            font-size: 12.5px;
-            color: #9ca3af;
-            line-height: 2.2;
-            text-align: left;
-        }
-        .text-purple { color: #d8b4fe; }
-        .text-green { color: #34d399; }
-        
-        .visual-display {
-            height: 180px;
-            margin-top: 24px;
-            border: 1px dashed #222227;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to bottom, rgba(147, 51, 234, 0.03), transparent);
-        }
-        .visual-display span {
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: #4b5563;
-            text-transform: uppercase;
+        .bento-card:hover {
+            border-color: rgba(147, 51, 234, 0.35);
+            background: rgba(255, 255, 255, 0.02);
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px -15px rgba(147, 51, 234, 0.15);
         }
     </style>
 </head>
-<body>
+<body class="bg-grid min-h-screen">
 
-    <!-- Purple Aura Glow Component -->
-    <div class="glow-radial"></div>
+    <!-- Radial Aura Light -->
+    <div class="absolute top-0 left-0 w-full h-[700px] glow-main pointer-events-none z-0"></div>
 
     <!-- 1. NAVIGATION CONTROL -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <div class="logo-dot"></div>
-                Reasonate<span>AI</span>
-            </a>
-            <nav>
-                <a href="#">Platform</a>
-                <a href="#">Solutions</a>
-                <a href="#">Pricing</a>
-            </nav>
-            <button class="demo-btn">Book Demo</button>
+    <header class="border-b border-neutral-900 backdrop-blur-md bg-black/40 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <!-- Logo -->
+                <a href="#" class="text-sm font-semibold tracking-tight text-white flex items-center gap-2">
+                    <span class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
+                    Reasonate<span class="text-neutral-400 font-light">AI</span>
+                </a>
+                <!-- Hidden on mobile, visible on desktop -->
+                <nav class="hidden md:flex gap-6 text-xs text-neutral-400 font-medium">
+                    <a href="#platform" class="hover:text-white transition">Platform</a>
+                    <a href="#features" class="hover:text-white transition">Solutions</a>
+                    <a href="#" class="hover:text-white transition">Pricing</a>
+                </nav>
+            </div>
+            <!-- Dynamic CTA Button -->
+            <div>
+                <button class="px-3 py-1.5 text-xs font-medium bg-white text-black rounded-md hover:bg-neutral-200 transition cursor-pointer">
+                    Book Demo
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- 2. HERO HEADLINE COMPONENT -->
-    <section class="hero">
-        <div class="badge">✨ Twin Architecture is now live</div>
-        <h1>Reasoning at the<br>speed of AI.</h1>
-        <p class="subtitle">Automate your entire software lifecycle with an Autonomous Virtual CTO. Build, audit, and deploy cloud environments instantly.</p>
-        <div class="cta-group">
-            <button class="btn-primary">Deploy Instantly</button>
-            <button class="btn-secondary">Watch Demo</button>
+    <!-- 2. RESPONSIVE HERO SECTION -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-16 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-300 mb-6">
+            ✨ Twin Architecture is now live globally
+        </div>
+        <!-- Heading scales automatically according to screen size -->
+        <h1 class="text-4xl sm:text-6xl md:text-[72px] font-bold tracking-tight text-white leading-[1.1] max-w-3xl mx-auto">
+            Reasoning at the <br class="hidden sm:inline"> speed of AI.
+        </h1>
+        <p class="mt-6 text-xs sm:text-sm md:text-base text-neutral-400 max-w-xl mx-auto font-light leading-relaxed">
+            Automate your entire software lifecycle with an Autonomous Virtual CTO. Build, audit, and deploy production-ready cloud environments instantly.
+        </p>
+        <!-- Stack buttons on tiny devices, row on tablet/PC -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <button class="w-full sm:w-auto px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium rounded-md transition cursor-pointer">
+                Deploy Instantly
+            </button>
+            <button class="w-full sm:w-auto px-5 py-2.5 bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 text-neutral-300 text-xs font-medium rounded-md transition cursor-pointer">
+                Watch Demo
+            </button>
         </div>
     </section>
 
-    <!-- 3. CODE LOGS TERMINAL BOX -->
-    <section class="canvas-container">
-        <div class="terminal-box">
-            <div class="terminal-header">
-                <div class="dots">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+    <!-- 3. TERMINAL PANELS (CODE VISUALIZATION) -->
+    <section id="platform" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 relative z-10">
+        <div class="w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[16/9] rounded-xl border border-neutral-900 bg-neutral-950/80 p-4 shadow-2xl relative overflow-hidden">
+            <div class="flex items-center justify-between border-b border-neutral-900 pb-3 mb-4">
+                <div class="flex gap-1.5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-neutral-800"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-neutral-800"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-neutral-800"></div>
                 </div>
-                <div class="terminal-title">autonomous-cto-engine.js</div>
-                <div style="width: 30px;"></div>
+                <div class="text-[9px] sm:text-[10px] text-neutral-500 font-mono">reasonate-cto-logs.sh</div>
+                <div class="w-4"></div>
             </div>
-            <div class="terminal-body">
-                <p class="text-purple">&gt; initializing virtual-cto-twin-core...</p>
-                <p class="text-green">&gt; cloud architecture mapping complete (0.38s)</p>
-                <p>&gt; running structural integrity checks across 14 active server modules...</p>
-                <div class="visual-display">
-                    <span>Interactive Canvas Engine</span>
+            <div class="font-mono text-[10px] sm:text-[11px] text-neutral-500 space-y-2 text-left">
+                <p class="text-purple-400">&gt; booting autonomous-twin-engine...</p>
+                <p class="text-emerald-400">&gt; cloud configuration synchronization matrix mapping complete.</p>
+                <!-- Simulation Area -->
+                <div class="h-[100px] sm:h-[150px] md:h-[220px] mt-4 border border-dashed border-neutral-900 rounded flex items-center justify-center bg-black/40">
+                    <span class="text-[9px] sm:text-xs text-neutral-600 tracking-widest uppercase animate-pulse">Interactive Simulation Dashboard Grid</span>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 4. CORE FEATURES BENTO GRID (RESPONSIVE BLOCKS) -->
+    <section id="features" class="max-w-5xl mx-auto px-4 sm:px-6 py-12 relative z-10 border-t border-neutral-900">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white">Engineered for Autonomous Operations</h2>
+            <p class="text-neutral-500 text-xs mt-1">Full production monitoring and system scalability architecture.</p>
+        </div>
+        <!-- Grid: Mobile me 1 column, Tablet/PC me 3 columns automatic format -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Box 1 (Large 2-column card on PC, Single on Mobile) -->
+            <div class="bento-card md:col-span-2 p-6 rounded-xl flex flex-col justify-between min-h-[220px]">
+                <div>
+                    <h3 class="text-base font-medium text-white mb-1.5">Autonomous Infrastructure Setup</h3>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-md">Instant repository configurations, automated cloud deployment setups, and comprehensive system auditing customized for high-security enterprise backends.</p>
+                </div>
+                <span class="text-[9px] text-purple-400 font-mono mt-4">CLOUD CONNECTED →</span>
+            </div>
+
+            <!-- Box 2 (Single card) -->
+            <div class="bento-card p-6 rounded-xl flex flex-col justify-between min-h-[220px]">
+                <div>
+                    <h3 class="text-base font-medium text-white mb-1.5">Proactive Fixes</h3>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Identifies system vulnerabilities and breaks before deployment cycles impact live production data pipelines.</p>
+                </div>
+            </div>
+
+            <!-- Box 3 (Single card) -->
+            <div class="bento-card p-6 rounded-xl flex flex-col justify-between min-h-[220px]">
+                <div>
+                    <h3 class="text-base font-medium text-white mb-1.5">Twin Core</h3>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Dual architectural runtime engine processing ensuring 100% zero downtime infrastructure transformations.</p>
+                </div>
+            </div>
+
+            <!-- Box 4 (Large 2-column card) -->
+            <div class="bento-card md:col-span-2 p-6 rounded-xl flex flex-col justify-between min-h-[220px]">
+                <div>
+                    <h3 class="text-base font-medium text-white mb-1.5">Intelligent Scale Loops</h3>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-md">Continuous runtime optimization checking layers that automatically adjust sever scaling blocks according to active user traffic weights.</p>
+                </div>
+                <span class="text-[9px] text-emerald-400 font-mono mt-4">EFFICIENCY: 99.8% ANCHORED</span>
+            </div>
+
         </div>
     </section>
 
